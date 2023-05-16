@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 import random
-
+app=Flask(__name__)
 
 # Define your API endpointcs and routes here
 
@@ -12,8 +12,6 @@ def home():
 def report_trigger():
     randomnumber=random.randint(1,1000000)
     return str(randomnumber)
-
-
 
 @app.route('/get_report', methods=['GET'])
 def get_report():
