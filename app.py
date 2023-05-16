@@ -1,9 +1,15 @@
 from flask import Flask, jsonify, request
+import psycopg2
 import random
+import os
+from dotenv import load_dotenv
+from dbconn import conn,create_vendors_table,close_connection
+
+create_vendors_table()
+
+#create_table_query()
+# Load environment variables from .env file
 app=Flask(__name__)
-
-# Define your API endpointcs and routes here
-
 @app.route('/')
 def home():
     return "hey"
@@ -35,3 +41,4 @@ def get_report():
 
 if __name__ == '__main__':
     app.run(port=8080,debug=True)
+    close_connection()
