@@ -25,16 +25,30 @@ conn = psycopg2.connect(
 # Create a cursor
 cursor = conn.cursor()
 
-# def create_vendors_table():
-#     create_table_query = """
-#         CREATE TABLE IF NOT EXISTS public.vendors (
-#             vendor_id SERIAL PRIMARY KEY,
-#             vendor_name VARCHAR(255) NOT NULL
-#         )
-#     """
+def create_vendors_table():
+    create_table_query = """
+        CREATE TABLE IF NOT EXISTS store_status.vendors (
+            vendor_id SERIAL PRIMARY KEY,
+            vendor_name VARCHAR(255) NOT NULL
+        )
+    """
+  
     
-#     cursor.execute(create_table_query)
-#     conn.commit()
+    cursor.execute(create_table_query)
+    conn.commit()
+    schema=[]
+    cursor.execute(
+        """
+        SELECT column_name, data_type
+        FROM information_schema.columns
+        WHERE table_name = 'vendors'
+        ORDER BY ordinal_position
+        """
+    )
+    for row in cursor.fetchall():
+        column_name, data_type = row
+        schema.append({'column_name': column_name, 'data_type': data_type})
+    return schema
 
 
 # Close the cursor and connection

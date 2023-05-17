@@ -3,15 +3,16 @@ import psycopg2
 import random
 import os
 from dotenv import load_dotenv
-from dbconn import conn,close_connection
+from dbconn import conn,close_connection,create_vendors_table
 
 #create_vendors_table()
 
 #create_table_query()
 # Load environment variables from .env file
 cursor=conn.cursor()
+#schema=create_vendors_table()
 a=""
-if(conn is not None and cursor):
+if(conn is not None):
   a="connection established"
 else:
     a="no connection"
@@ -19,6 +20,12 @@ app=Flask(__name__)
 @app.route('/')
 def home():
     return "hey"
+
+
+@app.route('/table_schema')
+def table_schema():
+    schema = create_vendors_table()
+    return jsonify({'table_schema': schema})
 
 @app.route('/trigger',methods=['GET'])
 def report_trigger():
