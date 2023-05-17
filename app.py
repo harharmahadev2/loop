@@ -3,7 +3,7 @@ import psycopg2
 import random
 import os
 from dotenv import load_dotenv
-from dbconn import conn,close_connection,create_vendors_table
+from dbconn import conn,close_connection,create_vendors_table,import_xlsx_to_database
 
 #create_vendors_table()
 
@@ -41,19 +41,13 @@ def get_report():
 
     }
     return jsonify(data)
-# @app.route('/csv-to-json', methods=['GET'])
-# def csv_to_json():
-#     csv_file = 'C:\Users\prrra\Desktop\store status.csv'  # Replace with the path to your CSV file
-    
-#     # Read the CSV file
-#     data = []
-#     with open(csv_file, 'r') as file:
-#         reader = csv_file.DictReader(file)
-#         for row in reader:
-#             data.append(row)
-    
-#     # Return the data in JSON format
-#     return jsonify(data)
+
+@app.route('/import_data')
+def import_data():
+    xlsx_path = 'C:\\Users\\prrra\\Desktop\\Menu hours.csv' # Update with your XLSX file path
+    table_name = 'store_status.menu_hours'  # Update with your table name
+    import_xlsx_to_database(xlsx_path, table_name)
+    return "Data imported successfully"
 
 
 

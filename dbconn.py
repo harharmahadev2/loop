@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import psycopg2
-
+import pandas as pd
 load_dotenv()
 
 
@@ -51,6 +51,21 @@ def create_vendors_table():
     return schema
 
 
+def import_xlsx_to_database(xlsx_path, table_name):
+   
+    cursor.execute(f"TRUNCATE TABLE {table_name}")
+    df = pd.read_csv(xlsx_path)
+    data = [tuple(row) for row in df.values]
+
+    # Generate placeholders for the SQL query
+    placeholders = ','.join(['%s'] * len(df.columns))
+
+    insert_query = f"INSERT INTO {table_name} VALUES ({placeholders})"
+
+    # Execute the INSERT statement with the data
+    cursor.executemany(insert_query, data)
+    conn.commit()
+    
 # Close the cursor and connection
 def close_connection():
     cursor.close()
