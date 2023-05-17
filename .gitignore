@@ -1,1 +1,8 @@
+/__pycache__
+/.vscode
+/myenv
+# /vite-project
+/node_modules
+report_*.*
+```
 .env
