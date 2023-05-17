@@ -25,16 +25,16 @@ conn = psycopg2.connect(
 # Create a cursor
 cursor = conn.cursor()
 
-def create_vendors_table():
-    create_table_query = """
-        CREATE TABLE IF NOT EXISTS public.vendors (
-            vendor_id SERIAL PRIMARY KEY,
-            vendor_name VARCHAR(255) NOT NULL
-        )
-    """
+# def create_vendors_table():
+#     create_table_query = """
+#         CREATE TABLE IF NOT EXISTS public.vendors (
+#             vendor_id SERIAL PRIMARY KEY,
+#             vendor_name VARCHAR(255) NOT NULL
+#         )
+#     """
     
-    cursor.execute(create_table_query)
-    conn.commit()
+#     cursor.execute(create_table_query)
+#     conn.commit()
 
 
 # Close the cursor and connection

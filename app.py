@@ -3,12 +3,18 @@ import psycopg2
 import random
 import os
 from dotenv import load_dotenv
-from dbconn import conn,create_vendors_table,close_connection
+from dbconn import conn,close_connection
 
-create_vendors_table()
+#create_vendors_table()
 
 #create_table_query()
 # Load environment variables from .env file
+cursor=conn.cursor()
+a=""
+if(conn is not None and cursor):
+  a="connection established"
+else:
+    a="no connection"
 app=Flask(__name__)
 @app.route('/')
 def home():
@@ -22,7 +28,12 @@ def report_trigger():
 @app.route('/get_report', methods=['GET'])
 def get_report():
     report_id = request.args.get('report_id')
-    return jsonify({'status': 'Running'})
+    data={
+        'status':'running',
+        'type of connection':a
+
+    }
+    return jsonify(data)
 # @app.route('/csv-to-json', methods=['GET'])
 # def csv_to_json():
 #     csv_file = 'C:\Users\prrra\Desktop\store status.csv'  # Replace with the path to your CSV file
